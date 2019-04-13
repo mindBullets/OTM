@@ -1,0 +1,13 @@
+{
+    "version": 3,
+    "mappings": "AIAA,OAAO,CAAC,8EAAI;AAEZ,AAAA,IAAI,CAAC;EACD,WAAW,EFFA,MAAM,EAAE,UAAU;EEG7B,WAAW,EFDE,GAAG;EEEhB,SAAS,EAAE,QAAQ;EACnB,WAAW,EAAE,GAAG;EAChB,KAAK,EHFG,OAAO,GGGlB",
+    "sources": [
+        "../public/style.scss",
+        "../public/abstracts/_colors.scss",
+        "../public/abstracts/_type-settings.scss",
+        "../public/abstracts/_general.scss",
+        "../public/base/_type-rules.scss"
+    ],
+    "names": [],
+    "file": "style.css"
+}
