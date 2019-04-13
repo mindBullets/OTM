@@ -1,11 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dot Game</title>
+    <title>One Tap Man</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <canvas id="my-canvas"></canvas>
   <script src="/index.js"></script>
+  <nav class="nav">
+    <ul>
+      <li><a href="#play">Play</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#play">logo here</a></li>
+      <li><a href="#manual">Manual</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+
+  <section class="section section--home" id="home">
+    <h1 class="page-title">ワンタップマン</h1>
+    <p class="page-subtitle">One Tap Man</p>
+  </section>
+
+  <canvas id="my-canvas"></canvas>
+  <section class="options">
+    <p class="options__score" id="score">0</p>
+    <input class="options__slider" id="slider" type="range" min="10" max="100" value="10">
+    <a class="btn btn--start" id="start" href="#">Start</a>
+  </section>
+
+  <section class="section section--about" id="about">
+    <h2 class="section__title">Who is One Tap Man?</h2>
+    <p class="section__subtitle">A hero for fun</p>
+    <img src="" alt="One Tap Man">
+    <h3>Tap to save the city</h3>
+    <p>Through rigorous training everyday of: 100 push-ups, 100 sit-ups, 100 squats and a 10km run, our hero has developed the power to destroy anything with one tap.</p>
+    <p>Giant meteors are raining down on The Bay Area! Keep the area safe by destroying everything in the sky.</p>
+  </section>
+
+  <section class="section section--manual">
+    <h2 class="section__title">How to play</h2>
+    <p class="section__subtitle">Three easy steps to being a hero</p>
+
+    <div class="instructions">
+
+      <figure class="instructions__instruction">
+        <img src="" alt="" class="instructions__img">
+        <figcaption class="instructions__caption">
+          <h3>Tap and destroy</h3>
+          <p>Tap a meteor to destroy it.</p>
+        </figcaption>
+      </figure>
+
+      <figure class="instructions__instruction">
+        <img src="" alt="" class="instructions__img">
+        <h3>Take a break</h3>
+        <p>Press the pause button so stop the action. Press Play to resume.</p>
+      </figure>
+
+      <figure class="instructions__instruction">
+        <h3>Make things less easy</h3>
+        <p>Life gets pretty boring when you can destroy anything with one tap. Change the game speed by sliding the bar left or right.</p>
+      </figure>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>Designed and coded by Jumar Balacy</p>
+    <p>jumarbalacy@outlook.com</p>
+  </footer>
 </body>
 </html>
