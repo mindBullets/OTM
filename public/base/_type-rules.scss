@@ -34,7 +34,11 @@ h1,
 h2,
 h3 {
     font-family: $ff-sans-hdrs;
-    color: $clr-black
+    color: rgba( $clr-black, .90 );
+}
+
+p {
+    margin-bottom: $baseline * 1px;
 }
 
 
@@ -58,7 +62,8 @@ set the base to 18
 
 /* Targeted typography */
 .page-title {
-    @include set-font-styles(37.90, 2);
+    @include set-font-styles(37.90, 2, 0);
+    background: rgba($clr-white, .90);
 }
 
 .section {

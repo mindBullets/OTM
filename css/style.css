@@ -32,7 +32,10 @@ h1,
 h2,
 h3 {
   font-family: "Montserrat", sans-serif;
-  color: #2E2E2E; }
+  color: rgba(46, 46, 46, 0.9); }
+
+p {
+  margin-bottom: 24px; }
 
 /*
 mobile sizes
@@ -54,7 +57,8 @@ set the base to 18
 .page-title {
   font-size: 2.36875em;
   line-height: 1.26649;
-  margin-bottom: 24px; }
+  margin-bottom: 0px;
+  background: rgba(255, 254, 242, 0.9); }
 
 .section__title {
   font-size: 1.77687em;
@@ -65,4 +69,56 @@ h3 {
   font-size: 1.33312em;
   line-height: 1.68776;
   margin-bottom: 0px; }
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+body {
+  margin: 0; }
+
+img {
+  height: auto;
+  width: 100%; }
+
+.section {
+  padding: 2em 1em; }
+
+.nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: #FFFEF2; }
+  .nav ul {
+    margin: 0;
+    padding: 1em 0;
+    list-style: none;
+    font-family: "Montserrat", sans-serif;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly; }
+  .nav .logo {
+    display: none; }
+  .nav a {
+    text-decoration: none;
+    font-weight: 700;
+    color: #2E2E2E; }
+
+.section--home {
+  margin-top: 3.5rem;
+  background: url(../../images/opmhero.jpg);
+  background-size: cover;
+  background-position: right;
+  padding: 9em 1em;
+  min-height: 50vh;
+  text-align: center; }
+
+.section--game {
+  text-align: center; }
 /*# sourceMappingURL=style.css.map */

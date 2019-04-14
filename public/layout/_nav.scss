@@ -1,0 +1,26 @@
+.nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: $clr-white;
+
+    ul {
+        margin: 0;
+        padding: $spacer 0;
+        list-style: none;
+        font-family: $ff-sans-hdrs;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    a {
+        text-decoration: none;
+        font-weight: $fw-bold;
+        color: $clr-black;
+    }
+}

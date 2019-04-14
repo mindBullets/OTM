@@ -10,27 +10,44 @@
     <ul>
       <li><a href="#play">Play</a></li>
       <li><a href="#about">About</a></li>
-      <li><a href="#play">logo here</a></li>
+      <li class="logo"><a href="#play">
+        <svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Desktop-HD" transform="translate(-644.000000, -708.000000)">
+                <g id="Group" transform="translate(644.000000, 708.000000)">
+                    <circle id="Oval" fill="#EF4628" cx="24" cy="24" r="24"></circle>
+                    <text id="OTM" font-family="Montserrat-Bold, Montserrat" font-size="16" font-weight="bold" line-spacing="24" letter-spacing="1.5" fill="#FFFEF2">
+                        <tspan x="3" y="29">OTM</tspan>
+                      </text>
+                  </g>
+              </g>
+          </g>
+        </svg></a></li>
       <li><a href="#manual">Manual</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
 
+  <!-- nothing here for now. Leaving for for other possible content down the line. -->
   <section class="section section--home" id="home">
     <h1 class="page-title">One Tap Man</h1>
-    <p class="page-subtitle">One Tap Man</p>
   </section>
 
-  <canvas id="my-canvas"></canvas>
-  <section class="options">
+  <section class="section section--game" id="game">
+    <h2 class="section__game">Play One Tap Man</h2>
+    <canvas id="my-canvas"></canvas>
+  </section>
+
+  <section class="section section--options" id="options">
+    <h2 class="section__options">Options</h2>
     <p class="options__score" id="score">0</p>
     <input class="options__slider" id="slider" type="range" min="10" max="100" value="10">
     <a class="btn btn--start" id="start" href="#">Start</a>
   </section>
 
   <section class="section section--about" id="about">
-    <h2 class="section__title">Who is One Tap Man?</h2>
+    <h2 class="section__title">One Tap who?</h2>
     <p class="section__subtitle">A hero for fun</p>
     <img src="temp.jpg" alt="One Tap Man">
     <h3>Tap to save the city</h3>
@@ -59,6 +76,7 @@
       </figure>
 
       <figure class="instructions__instruction">
+        <img src="temp.jpg" alt="" class="instructions__img">
         <h3>Make things less easy</h3>
         <p>Life gets pretty boring when you can destroy anything with one tap. Change the game speed by sliding the bar left or right.</p>
       </figure>
@@ -67,7 +85,7 @@
   </section>
 
   <footer class="footer">
-    <p>Designed and coded by Jumar Balacy</p>
+    <p>Created by Jumar Balacy</p>
     <p>jumarbalacy@outlook.com</p>
   </footer>
 </body>

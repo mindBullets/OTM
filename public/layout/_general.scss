@@ -1,0 +1,20 @@
+//layout that should be everywhere
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+img {
+    height: auto;
+    width: 100%;
+}
+
+.section {
+    padding: ($spacer * 2) $spacer;
+}

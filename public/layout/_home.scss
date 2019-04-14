@@ -1,0 +1,9 @@
+.section--home {
+    margin-top: 3.5rem;
+    background: url(../../images/opmhero.jpg);
+    background-size: cover;
+    background-position: right;
+    padding: ($spacer * 9) $spacer;
+    min-height: 50vh;
+    text-align: center;
+}
