@@ -1,0 +1,7 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: $clr-dark-grey;
+    padding: ($spacer * 2) 0;
+}

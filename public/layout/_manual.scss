@@ -2,7 +2,8 @@
 
     &__step {
         position: relative;
-        margin-bottom: $spacer;
+        margin-bottom: $spacer * 2;
+        box-shadow: $box-shadow;
     }
 
     &__img {
@@ -11,7 +12,7 @@
 
     &__caption {
         position: absolute;
-        background: rgba( $clr-black, .8);
+        background: rgba( $clr-black, .9);
         left: 0;
         right: 0;
         // bottom: $spacer * 1;

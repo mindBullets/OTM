@@ -86,6 +86,11 @@ h3 {
 .manual__caption {
   color: #FFFEF2; }
 
+.footer__credit,
+.footer__contact {
+  color: #FFFEF2;
+  margin: 0; }
+
 *,
 *::before,
 *::after {
@@ -150,14 +155,16 @@ img {
 
 .manual__step {
   position: relative;
-  margin-bottom: 1em; }
+  margin-bottom: 2em;
+  -webkit-box-shadow: 0 0 0.5em rgba(93, 93, 93, 0.6);
+          box-shadow: 0 0 0.5em rgba(93, 93, 93, 0.6); }
 
 .manual__img {
   display: block; }
 
 .manual__caption {
   position: absolute;
-  background: rgba(46, 46, 46, 0.8);
+  background: rgba(46, 46, 46, 0.9);
   left: 0;
   right: 0;
   bottom: 0;
@@ -165,4 +172,18 @@ img {
 
 .manual__desc {
   margin: 0; }
+
+.footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #5D5D5D;
+  padding: 2em 0; }
 /*# sourceMappingURL=style.css.map */
