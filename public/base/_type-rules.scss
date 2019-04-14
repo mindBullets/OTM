@@ -14,6 +14,10 @@ body {
     font-size: 1em;
     line-height: 1.5;
     color: $clr-dark-grey;
+
+    @include mq(small) {
+        @include set-font-styles(18, 1, 0);
+    }
 }
 
 h1,
@@ -64,17 +68,41 @@ set the base to 18
 .page-title {
     @include set-font-styles(37.90, 2, 0);
     background: rgba($clr-white, .90);
+    display: none;
 }
 
 .section {
     &__title {
-        @include set-font-styles(28.43, 1.5, 0);
+        @include set-font-styles(28.43, 1.5, ( $baseline / 2 ) );
         @include underline();
+        color: $clr-black;
+        // color: $clr-white;
+        // background: $gradient;
+
+        @include mq(small) {
+            @include set-font-styles(40.5, 2.5, ( $baseline / 2 ) );
+        }
     }
 
     &__subtitle {
         @include set-font-styles(21.33, 1);
+        font-style: italic;
+        @include mq(small) {
+            @include set-font-styles(27, 1);
+        }
 
+    }
+}
+
+.section--game {
+    text-align: center;
+    letter-spacing: 10px;
+    &__title {
+        background: $clr-dark-grey;
+        color: $clr-white;
+        @include mq(medium) {
+            @include set-font-styles(60.75, 4);
+        }
     }
 }
 

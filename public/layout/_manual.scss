@@ -1,4 +1,10 @@
+.section--manual {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 .manual {
+    @include limit-w();
 
     &__step {
         position: relative;
@@ -21,5 +27,9 @@
     }
     &__desc {
         margin: 0;
+    }
+
+    @include mq(large) {
+        @include grid();
     }
 }

@@ -12,3 +12,6 @@ $clr-primary: $clr-red;
 $clr-secondary: $clr-yellow;
 $clr-accent: $clr-blue;
 $clr-background: $clr-grey;
+
+$gradient: linear-gradient( 90deg, $clr-dark-grey, $clr-dark-grey, $clr-white );
+$gradient-center: linear-gradient( 90deg, $clr-white, $clr-dark-grey, $clr-dark-grey, $clr-dark-grey, $clr-dark-grey, $clr-white );

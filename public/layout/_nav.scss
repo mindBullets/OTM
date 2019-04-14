@@ -6,16 +6,23 @@
     background: $clr-white;
 
     ul {
-        margin: 0;
+        margin: 0 auto;
         padding: $spacer 0;
         list-style: none;
         font-family: $ff-sans-hdrs;
         display: flex;
         justify-content: space-evenly;
+        align-items: center;
+        max-width: 1200px;
+
     }
 
     .logo {
         display: none;
+        @include mq(small) {
+            display: block;
+
+        }
     }
 
     a {

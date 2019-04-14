@@ -8,6 +8,7 @@
 
 body {
     margin: 0;
+    background: $clr-white;
 }
 
 img {
@@ -17,5 +18,4 @@ img {
 
 .section {
     padding: ($spacer * 2) $spacer;
-    background: $clr-white;
 }
