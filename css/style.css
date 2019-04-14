@@ -82,6 +82,10 @@ h3 {
   line-height: 1.68776;
   margin-bottom: 0px; }
 
+.manual__title,
+.manual__caption {
+  color: #FFFEF2; }
+
 *,
 *::before,
 *::after {
@@ -96,7 +100,8 @@ img {
   width: 100%; }
 
 .section {
-  padding: 2em 1em; }
+  padding: 2em 1em;
+  background: #FFFEF2; }
 
 .nav {
   position: absolute;
@@ -129,9 +134,35 @@ img {
   background-position: right;
   padding: 9em 1em;
   min-height: 50vh;
-  text-align: center; }
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
 
 .section--about__image {
   -webkit-box-shadow: 0 0 0.5em rgba(93, 93, 93, 0.6);
           box-shadow: 0 0 0.5em rgba(93, 93, 93, 0.6); }
+
+.manual__step {
+  position: relative;
+  margin-bottom: 1em; }
+
+.manual__img {
+  display: block; }
+
+.manual__caption {
+  position: absolute;
+  background: rgba(46, 46, 46, 0.8);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.5em 1em; }
+
+.manual__desc {
+  margin: 0; }
 /*# sourceMappingURL=style.css.map */

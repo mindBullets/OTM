@@ -81,3 +81,8 @@ set the base to 18
 h3 {
     @include set-font-styles(21.33, 1.5, 0);
 }
+
+.manual__title,
+.manual__caption {
+    color: $clr-white;
+}

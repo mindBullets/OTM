@@ -5,5 +5,8 @@
     background-position: right;
     padding: ($spacer * 9) $spacer;
     min-height: 50vh;
-    text-align: center;
+    // text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

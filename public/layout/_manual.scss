@@ -1,0 +1,24 @@
+.manual {
+
+    &__step {
+        position: relative;
+        margin-bottom: $spacer;
+    }
+
+    &__img {
+        display: block;
+    }
+
+    &__caption {
+        position: absolute;
+        background: rgba( $clr-black, .8);
+        left: 0;
+        right: 0;
+        // bottom: $spacer * 1;
+        bottom: 0;
+        padding: ( $spacer * .5 ) $spacer;
+    }
+    &__desc {
+        margin: 0;
+    }
+}
