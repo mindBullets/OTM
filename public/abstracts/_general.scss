@@ -4,3 +4,5 @@ $breakpoints: (
     small: 576px,
     medium: 768px
 );
+
+$box-shadow: 0 0 ( $spacer / 2 ) rgba( $clr-dark-grey, 0.6 );

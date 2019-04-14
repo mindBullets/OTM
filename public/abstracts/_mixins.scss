@@ -6,3 +6,15 @@
     line-height: ( $line-height * $baseline ) / $target;
     margin-bottom: $margin-bottom * 1px;
 }
+
+@mixin underline( $bg: currentColor, $margin: $spacer, $h: 1px , $w: 100% ) {
+    &::after {
+        content: '';
+        display: block;
+        margin: ( $spacer / 4 ) 0;
+        background: $bg;
+        height: $h;
+        width: $w;
+        @content;
+    }
+}

@@ -45,16 +45,16 @@ p {
 /*
 mobile sizes
 title 2.369em (37.90px)
-sub title 1.777em (28.43px)
-h3 1.333em (21.33px)
+section title 1.777em (28.43px)
+sub title h3 1.333em (21.33px)
 body 1em (16.00px)
 figure figcaption 0.75em (12.00px)
 */
 
 /*
 title 3.375em (60.75px)
-sub 2.25em (40.50px)
-h3 1.5em (27.00px)
+section title 2.25em (40.50px)
+sub title h3 1.5em (27.00px)
 body 1em (18.00px)
 0.667em (12.00px)
 set the base to 18
@@ -68,7 +68,13 @@ set the base to 18
 
 .section {
     &__title {
-        @include set-font-styles(28.43, 1.5);
+        @include set-font-styles(28.43, 1.5, 0);
+        @include underline();
+    }
+
+    &__subtitle {
+        @include set-font-styles(21.33, 1);
+
     }
 }
 

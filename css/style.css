@@ -40,15 +40,15 @@ p {
 /*
 mobile sizes
 title 2.369em (37.90px)
-sub title 1.777em (28.43px)
-h3 1.333em (21.33px)
+section title 1.777em (28.43px)
+sub title h3 1.333em (21.33px)
 body 1em (16.00px)
 figure figcaption 0.75em (12.00px)
 */
 /*
 title 3.375em (60.75px)
-sub 2.25em (40.50px)
-h3 1.5em (27.00px)
+section title 2.25em (40.50px)
+sub title h3 1.5em (27.00px)
 body 1em (18.00px)
 0.667em (12.00px)
 set the base to 18
@@ -63,6 +63,18 @@ set the base to 18
 .section__title {
   font-size: 1.77687em;
   line-height: 1.26627;
+  margin-bottom: 0px; }
+  .section__title::after {
+    content: '';
+    display: block;
+    margin: 0.25em 0;
+    background: currentColor;
+    height: 1px;
+    width: 100%; }
+
+.section__subtitle {
+  font-size: 1.33312em;
+  line-height: 1.12518;
   margin-bottom: 24px; }
 
 h3 {
@@ -119,6 +131,7 @@ img {
   min-height: 50vh;
   text-align: center; }
 
-.section--game {
-  text-align: center; }
+.section--about__image {
+  -webkit-box-shadow: 0 0 0.5em rgba(93, 93, 93, 0.6);
+          box-shadow: 0 0 0.5em rgba(93, 93, 93, 0.6); }
 /*# sourceMappingURL=style.css.map */
