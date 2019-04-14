@@ -1,9 +1,72 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700|Montserrat:200,400');
 
+/*
+Mobile Perfect Fourth 1.333
+Desktop Perfect Fifth 1.5 type scale h1-h3, p, small
+*/
+
+/* General typography */
+html { font-size: $base * 1px; }
+
 body {
     font-family: $ff-sans-body;
     font-weight: $fw-extra-light;
-    font-size: 1.125rem;
+    font-size: 1em;
     line-height: 1.5;
-    color: $dark-grey;
+    color: $clr-dark-grey;
+}
+
+h1,
+h2,
+h3,
+p,
+figure,
+figcaption {
+    margin: 0;
+    padding: 0;
+}
+
+/*
+not assigning sizes here to give myself more flexibility
+in case I want to change sizes later
+*/
+h1,
+h2,
+h3 {
+    font-family: $ff-sans-hdrs;
+    color: $clr-black
+}
+
+
+/*
+mobile sizes
+title 2.369em (37.90px)
+sub title 1.777em (28.43px)
+h3 1.333em (21.33px)
+body 1em (16.00px)
+figure figcaption 0.75em (12.00px)
+*/
+
+/*
+title 3.375em (60.75px)
+sub 2.25em (40.50px)
+h3 1.5em (27.00px)
+body 1em (18.00px)
+0.667em (12.00px)
+set the base to 18
+*/
+
+/* Targeted typography */
+.page-title {
+    @include set-font-styles(37.90, 2);
+}
+
+.section {
+    &__title {
+        @include set-font-styles(28.43, 1.5);
+    }
+}
+
+h3 {
+    @include set-font-styles(21.33, 1.5, 0);
 }

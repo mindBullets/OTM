@@ -1,0 +1,8 @@
+//18px default for this website
+//takes unitless numbers
+@mixin set-font-styles($target, $line-height, $margin-bottom: $baseline, $context: $base) {
+    //context default is 18 for desktop. 16 for mobile
+    font-size: ( $target / $context ) * 1em;
+    line-height: ( $line-height * $baseline ) / $target;
+    margin-bottom: $margin-bottom * 1px;
+}

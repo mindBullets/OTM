@@ -4,3 +4,7 @@ $ff-sans-body: 'Lato', sans-serif;
 $fw-extra-light: 200;   //small copy
 $fw-normal: 400;  //body copy and smaller headers
 $fw-bold: 700;    // larger headers
+
+/*assumes 18px html font-size or 1.125em*/
+$base: 16;
+$baseline: 24; //24px baseline grid for vertical rhythm set to 1.5 for a multiplyer in @mixin set-font-styles

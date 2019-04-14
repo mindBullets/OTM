@@ -1,8 +1,68 @@
+/*assumes 18px html font-size or 1.125em*/
 @import url("https://fonts.googleapis.com/css?family=Lato:400,700|Montserrat:200,400");
+/*
+Mobile Perfect Fourth 1.333
+Desktop Perfect Fifth 1.5 type scale h1-h3, p, small
+*/
+/* General typography */
+html {
+  font-size: 16px; }
+
 body {
   font-family: "Lato", sans-serif;
   font-weight: 200;
-  font-size: 1.125rem;
+  font-size: 1em;
   line-height: 1.5;
   color: #5D5D5D; }
+
+h1,
+h2,
+h3,
+p,
+figure,
+figcaption {
+  margin: 0;
+  padding: 0; }
+
+/*
+not assigning sizes here to give myself more flexibility
+in case I want to change sizes later
+*/
+h1,
+h2,
+h3 {
+  font-family: "Montserrat", sans-serif;
+  color: #2E2E2E; }
+
+/*
+mobile sizes
+title 2.369em (37.90px)
+sub title 1.777em (28.43px)
+h3 1.333em (21.33px)
+body 1em (16.00px)
+figure figcaption 0.75em (12.00px)
+*/
+/*
+title 3.375em (60.75px)
+sub 2.25em (40.50px)
+h3 1.5em (27.00px)
+body 1em (18.00px)
+0.667em (12.00px)
+set the base to 18
+*/
+/* Targeted typography */
+.page-title {
+  font-size: 2.36875em;
+  line-height: 1.26649;
+  margin-bottom: 24px; }
+
+.section__title {
+  font-size: 1.77687em;
+  line-height: 1.26627;
+  margin-bottom: 24px; }
+
+h3 {
+  font-size: 1.33312em;
+  line-height: 1.68776;
+  margin-bottom: 0px; }
 /*# sourceMappingURL=style.css.map */
