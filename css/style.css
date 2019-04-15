@@ -96,16 +96,16 @@ set the base to 18
       margin-bottom: 24px; } }
 
 .section--game {
-  text-align: center;
   letter-spacing: 10px; }
   .section--game__title {
+    text-align: center;
     background: #5D5D5D;
     color: #FFFEF2; }
     @media only screen and (min-width: 768px) {
       .section--game__title {
         font-size: 3.79688em;
         line-height: 1.58025;
-        margin-bottom: 24px; } }
+        margin-bottom: 0px; } }
 
 h3 {
   font-size: 1.33312em;
@@ -187,7 +187,14 @@ img {
           align-items: center; }
 
 .section--game {
-  padding: 0; }
+  padding: 0;
+  margin: 0; }
+
+canvas {
+  border: 1px solid #5D5D5D;
+  display: block;
+  padding: 0;
+  margin: 0 auto; }
 
 .section--about__image {
   -webkit-box-shadow: 0 0 0.5em rgba(93, 93, 93, 0.6);

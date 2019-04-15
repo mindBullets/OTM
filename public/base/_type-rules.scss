@@ -95,13 +95,14 @@ set the base to 18
 }
 
 .section--game {
-    text-align: center;
+    // text-align: center;
     letter-spacing: 10px;
     &__title {
+        text-align: center;
         background: $clr-dark-grey;
         color: $clr-white;
         @include mq(medium) {
-            @include set-font-styles(60.75, 4);
+            @include set-font-styles(60.75, 4, 0);
         }
     }
 }

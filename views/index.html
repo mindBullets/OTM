@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body>
-  <script src="/index.js"></script>
+
   <nav class="nav">
     <ul>
       <li><a href="#play">Play</a></li>
@@ -17,9 +17,8 @@
                 <g id="Desktop-HD" transform="translate(-645.000000, -708.000000)">
                     <g id="Group" transform="translate(645.000000, 708.000000)">
                         <circle id="Oval" fill="#EF4628" cx="50" cy="50" r="50"></circle>
-                        <text id="OTM" font-family="Montserrat-Bold, Montserrat" font-size="38" font-weight="bold" line-spacing="48" letter-spacing="2.61733389" fill="#FFFEF2">
-                            <tspan x="1.0957158" y="63">OT</tspan>
-                            <tspan x="60.1003836" y="63" letter-spacing="2.55190063">M</tspan>
+                        <text id="OTM" font-family="Montserrat-Bold, Montserrat" font-size="38" font-weight="bold" fill="#FFFEF2">
+                            <tspan x="4.989" y="63">OTM</tspan>
                         </text>
                     </g>
                 </g>
@@ -39,16 +38,25 @@
   </section>
 
   <section class="section section--game" id="game">
-    <h2 class="section__title section--game__title">One Tap Man</h2>
-    <canvas id="my-canvas"></canvas>
+    <h2 class="section--game__title">One Tap Man</h2>
+
+    <div class="section--options">
+      <h3 class="section--options__header">Rent Money Earned</h3>
+      <p class="section--options__score" id="score">$<span id="rent-money">0</span></p>
+      <input class="options__slider" id="slider" type="range" min=10 max=100 value=10>
+      <a class="btn btn--start" id="start" href="#">Start</a>
+    </div>
+
+    <canvas id="canvas"></canvas>
+    <script src="../public/index.js"></script>
   </section>
 
-  <section class="section section--options" id="options">
+  <!-- <section class="section section--options" id="options">
     <h2 class="section__options">Options</h2>
     <p class="options__score" id="score">$<span id="rent-money">0</span></p>
     <input class="options__slider" id="slider" type="range" min="10" max="100" value="10">
     <a class="btn btn--start" id="start" href="#">Start</a>
-  </section>
+  </section> -->
 
   <section class="section section--about" id="about">
     <h2 class="section__title section--about__title">One Tap who?</h2>
@@ -56,7 +64,7 @@
     <img class="section--about__image" src="../images/oneTapMan-about.png" alt="">
     <h3 class="section--about__heading">Tap to save the city</h3>
     <p class="section--about__body">Through rigorous training everyday of: 100 push-ups, 100 sit-ups, 100 squats and a 10km run, our hero has developed the power to destroy anything with one tap.</p>
-    <p class="section--about__body">Giant meteors are raining down on The Bay Area! Keep the area safe by destroying everything in the sky. The grateful citizens of The Bay will give you money for every one you destroy. A Hero has to pay his rent...</p>
+    <p class="section--about__body">Giant meteors are raining down on The Bay Area! Keep the area safe by destroying everything in the sky. The grateful citizens of The Bay will give you money for every one you destroy. Smaller meteors are harder to hit so they're worth more money than larger ones.</p>
   </section>
 
   <section class="section section--manual" id="manual">
