@@ -8,19 +8,23 @@ const maxD = 50;
 const windowHeightOffset = 50;
 const windowWidthOffset = 32;
 const fps = 60;
+const meteorLength = 1000 // interval for each meteor
 
-var gameLoop; // magic happens here
 var meteorList = []; // array for meteors
 var ctx = document.getElementById('canvas').getContext('2d');
-var play = true;
+var play = false;
 var rent = 0;
+var tNow = window.performance.now();
+var tLastUpdate = tNow;
+var tLastMeteor = tNow; // used to time meteor creation
+var animationId;
 
 // basic set up
 ctx.canvas.height = (document.documentElement.clientHeight - windowHeightOffset) / 2;
 ctx.canvas.width = document.documentElement.clientWidth - windowWidthOffset;
 
 ctx.fillStyle = defaultFill;
-ctx.font = '24px Montserrat';
+ctx.font = '80px Arial';
 
 // avatar placeholder
 var otm = {
@@ -37,10 +41,6 @@ function resizeCanvas () {
     ctx.canvas.height = (document.documentElement.clientHeight - windowHeightOffset) * 0.75;
     ctx.canvas.width = document.documentElement.clientWidth - windowWidthOffset;
   }
-  // else {
-  //   ctx.canvas.height = (document.documentElement.clientHeight - windowHeightOffset) / 2;
-  //   ctx.canvas.width = document.documentElement.clientWidth - windowWidthOffset;
-  // }
 }
 
 // y = -1 / 10 x + 11
@@ -149,22 +149,39 @@ function moveMeteors (fallRate) {
 }
 
 resizeCanvas();
+clearRect();
 
-meteorList.push(createMeteor());
-meteorList.push(createMeteor());
-meteorList.push(createMeteor());
-meteorList.push(createMeteor());
-
-gameLoop = function () {
-  // reset the canvas
-  clearRect();
-  // draw the hero
-  drawOtm((ctx.canvas.width / 2), (ctx.canvas.height - 50));
-  // increments all meteors then draws them, removes when they touch the bottom
-  moveMeteors(getSpeed());
-
-  // window.requestAnimationFrame(gameLoop);
+function gameLoop () {
+  tNow = window.performance.now();
+  // 1 meteor/second
+  if (tNow - tLastMeteor >= meteorLength) {
+    meteorList.push(createMeteor());
+    tLastMeteor = tNow;
+  }
+  // runs at 60 fps
+  if (tNow - tLastUpdate > 1000 / fps && play) {
+    window.requestAnimationFrame(gameLoop);
+    // reset the canvas
+    clearRect();
+    // draw the hero
+    drawOtm((ctx.canvas.width / 2), (ctx.canvas.height - 50));
+    // increments all meteors then draws them, removes when they touch the bottom
+    moveMeteors(getSpeed());
+  }
 };
+
+var startPause = document.getElementById('start');
+window.requestAnimationFrame(gameLoop);
+startPause.addEventListener('click', function () {
+  console.log(`play ${play}`);
+  if (play) {
+    play = false;
+  } else {
+    play = true;
+    startPause.innerHTML = 'Pause';
+    window.requestAnimationFrame(gameLoop);
+  }
+})
 
 // event listeners
 window.addEventListener('click', function (e) {
@@ -172,14 +189,14 @@ window.addEventListener('click', function (e) {
     if (didClickMeteor(e, meteorList[i])) {
       updateRent(meteorList[i].getValue());
       removeMeteor(i);
-      console.log(rent);
     }
   }
 });
+
+// adjust the canvas on resize
 window.addEventListener('resize', function () {
   resizeCanvas();
   drawOtm((ctx.canvas.width / 2), (ctx.canvas.height - 50))
 });
 window.onresize = resizeCanvas;
-var game = setInterval(gameLoop, 1000 / fps);
-// var meteorInterval = setInterval(meteorList.push(createMeteor()), 1000);
+// var game = setInterval(gameLoop, 1000 / fps);

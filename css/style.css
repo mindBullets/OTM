@@ -59,12 +59,6 @@ body 1em (18.00px)
 set the base to 18
 */
 /* Targeted typography */
-@media only screen and (min-width: 576px) {
-  .nav ul {
-    font-size: 1.77687rem;
-    line-height: 1.26627;
-    margin-bottom: 0px; } }
-
 .page-title {
   font-size: 2.36875rem;
   line-height: 1.26649;
@@ -152,7 +146,7 @@ img {
   background: #FFFEF2; }
   .nav ul {
     margin: 0 auto;
-    padding: 1em 0;
+    padding: 0.5em 0;
     list-style: none;
     font-family: "Montserrat", sans-serif;
     display: -webkit-box;
@@ -224,9 +218,7 @@ canvas {
     .section--about__image {
       -ms-grid-row: 1;
       -ms-grid-row-span: 5;
-      grid-row: 1 / 6;
-      -webkit-transform: translateY(-10%);
-              transform: translateY(-10%); } }
+      grid-row: 1 / 6; } }
 
 .section--manual {
   max-width: 1200px;
