@@ -1,5 +1,4 @@
 /* eslint-disable semi */
-'use srict';
 const defaultFill = '#FFFFFF';
 const darkGrey = '#5D5D5D';
 const red = '#EF4628';
@@ -10,6 +9,7 @@ const windowWidthOffset = 32;
 const fps = 60;
 const meteorLength = 1000 // interval for each meteor
 
+var playPause = document.getElementById('start');
 var meteorList = []; // array for meteors
 var ctx = document.getElementById('canvas').getContext('2d');
 var play = false;
@@ -17,7 +17,6 @@ var rent = 0;
 var tNow = window.performance.now();
 var tLastUpdate = tNow;
 var tLastMeteor = tNow; // used to time meteor creation
-var animationId;
 
 // basic set up
 ctx.canvas.height = (document.documentElement.clientHeight - windowHeightOffset) / 2;
@@ -170,15 +169,14 @@ function gameLoop () {
   }
 };
 
-var startPause = document.getElementById('start');
 window.requestAnimationFrame(gameLoop);
-startPause.addEventListener('click', function () {
+playPause.addEventListener('click', function () {
   console.log(`play ${play}`);
   if (play) {
     play = false;
   } else {
     play = true;
-    startPause.innerHTML = 'Pause';
+    playPause.innerHTML = 'Pause';
     window.requestAnimationFrame(gameLoop);
   }
 })
