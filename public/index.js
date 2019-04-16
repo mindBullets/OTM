@@ -11,14 +11,14 @@ const fps = 60;
 
 var gameLoop; // magic happens here
 var meteorList = []; // array for meteors
-var curSpeed = getSpeed();
 var ctx = document.getElementById('canvas').getContext('2d');
 var play = true;
-var rent = 0.0;
+var rent = 0;
 
 // basic set up
 ctx.canvas.height = (document.documentElement.clientHeight - windowHeightOffset) / 2;
 ctx.canvas.width = document.documentElement.clientWidth - windowWidthOffset;
+
 ctx.fillStyle = defaultFill;
 ctx.font = '24px Montserrat';
 
@@ -29,11 +29,24 @@ var otm = {
   h: 50,
   w: 50
 }
+function resizeCanvas () {
+  if (document.documentElement.clientWidth - windowWidthOffset > 1200) {
+    ctx.canvas.width = 1200;
+  } else {
+    // full height
+    ctx.canvas.height = (document.documentElement.clientHeight - windowHeightOffset) * 0.75;
+    ctx.canvas.width = document.documentElement.clientWidth - windowWidthOffset;
+  }
+  // else {
+  //   ctx.canvas.height = (document.documentElement.clientHeight - windowHeightOffset) / 2;
+  //   ctx.canvas.width = document.documentElement.clientWidth - windowWidthOffset;
+  // }
+}
 
 // y = -1 / 10 x + 11
 function updateRent (num) {
-  rent += num;
-  document.getElementById('rent-money').innerHTML = rent;
+  rent += parseFloat(num);
+  document.getElementById('rent-money').innerHTML = rent.toFixed(2);
 }
 
 // use between [10, 50]
@@ -56,7 +69,7 @@ function clearRect () {
 
 function drawOtm (x, y) {
   ctx.fillStyle = red;
-  ctx.fillRect(otm.x, otm.y, otm.w, otm.h);
+  ctx.fillRect(x, y, otm.w, otm.h);
 }
 
 function didMeteorCollide (meteor1, meteor2) {
@@ -95,7 +108,7 @@ function createMeteor () {
     y: tempY,
     r: tempR,
     draw: function (num) {
-      //draw the meteor
+      // draw the meteor
       ctx.fillStyle = defaultFill;
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
@@ -116,7 +129,7 @@ function createMeteor () {
     // still entering the canvas and a collision
     if ((meteorList[i].y < meteorList[i].r) && didMeteorCollide(tempMeteor, meteorList[i])) {
       // move it up a bit
-      tempMeteor.y -= tempMeteor.r + meteorList[i].r;
+      tempMeteor.y -= 2 * tempMeteor.r + 2 * meteorList[i].r;
     }
   }
   return tempMeteor;
@@ -135,6 +148,8 @@ function moveMeteors (fallRate) {
   }
 }
 
+resizeCanvas();
+
 meteorList.push(createMeteor());
 meteorList.push(createMeteor());
 meteorList.push(createMeteor());
@@ -144,7 +159,7 @@ gameLoop = function () {
   // reset the canvas
   clearRect();
   // draw the hero
-  drawOtm();
+  drawOtm((ctx.canvas.width / 2), (ctx.canvas.height - 50));
   // increments all meteors then draws them, removes when they touch the bottom
   moveMeteors(getSpeed());
 
@@ -155,11 +170,16 @@ gameLoop = function () {
 window.addEventListener('click', function (e) {
   for (let i = 0; i < meteorList.length; i++) {
     if (didClickMeteor(e, meteorList[i])) {
+      updateRent(meteorList[i].getValue());
       removeMeteor(i);
       console.log(rent);
-      updateRent(meteorList[i].getValue());
     }
   }
 });
+window.addEventListener('resize', function () {
+  resizeCanvas();
+  drawOtm((ctx.canvas.width / 2), (ctx.canvas.height - 50))
+});
+window.onresize = resizeCanvas;
 var game = setInterval(gameLoop, 1000 / fps);
 // var meteorInterval = setInterval(meteorList.push(createMeteor()), 1000);

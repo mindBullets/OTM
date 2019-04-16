@@ -2,7 +2,7 @@
 //takes unitless numbers
 @mixin set-font-styles($target, $line-height, $margin-bottom: $baseline, $context: $base) {
     //context default is 18 for desktop. 16 for mobile
-    font-size: ( $target / $context ) * 1em;
+    font-size: ( $target / $context ) * 1rem;
     line-height: ( $line-height * $baseline ) / $target;
     margin-bottom: $margin-bottom * 1px;
 }
@@ -32,7 +32,7 @@
 }
 
 @mixin limit-w() {
-    max-width: 576px;
+    max-width: 768px;
 }
 
 //I only use this once, but if I added another section that needed columns I could reuse it later
