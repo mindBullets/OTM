@@ -147,8 +147,7 @@ function moveMeteors (fallRate) {
   }
 }
 
-resizeCanvas();
-clearRect();
+
 
 function gameLoop () {
   tNow = window.performance.now();
@@ -169,7 +168,11 @@ function gameLoop () {
   }
 };
 
-window.requestAnimationFrame(gameLoop);
+window.addEventListener('load', function () {
+  resizeCanvas();
+  clearRect();
+  window.requestAnimationFrame(gameLoop);
+})
 playPause.addEventListener('click', function () {
   console.log(`play ${play}`);
   if (play) {
