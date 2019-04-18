@@ -1,12 +1,20 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700|Montserrat:200,400');
 
+@font-face {
+    font-family: 'Imnova';
+    src: url(../../imnova_st/Imnova_St.ttf);
+  }
+
 /*
 Mobile Perfect Fourth 1.333
 Desktop Perfect Fifth 1.5 type scale h1-h3, p, small
 */
 
 /* General typography */
-html { font-size: $base * 1px; }
+html {
+    font-size: $base * 1px;
+    scroll-behavior: smooth;
+}
 
 body {
     font-family: $ff-sans-body;
@@ -35,9 +43,14 @@ not assigning sizes here to give myself more flexibility
 in case I want to change sizes later
 */
 h1,
-h2,
-h3 {
+h2 {
     font-family: $ff-sans-hdrs;
+    color: rgba( $clr-black, .90 );
+    letter-spacing: 3px;
+
+}
+
+h3 {
     color: rgba( $clr-black, .90 );
 }
 
@@ -65,6 +78,10 @@ set the base to 18
 */
 
 /* Targeted typography */
+.nav ul {
+    letter-spacing: 5px;
+}
+
 .page-title {
     @include set-font-styles(37.90, 2, 0);
     background: rgba($clr-white, .90);
@@ -86,7 +103,7 @@ set the base to 18
 
     &__subtitle {
         @include set-font-styles(21.33, 1);
-        font-style: italic;
+        // font-style: italic;
         @include mq(small) {
             @include set-font-styles(27, 1);
         }
@@ -99,7 +116,7 @@ set the base to 18
     letter-spacing: 10px;
     &__title {
         text-align: center;
-        background: $clr-dark-grey;
+        background: $clr-red;
         color: $clr-white;
         @include mq(medium) {
             @include set-font-styles(60.75, 4, 0);
@@ -109,11 +126,13 @@ set the base to 18
 
 h3 {
     @include set-font-styles(21.33, 1.5, 0);
+    letter-spacing: 4px;
 }
 
 .manual__title,
 .manual__caption {
     color: $clr-white;
+
 }
 
 .footer__credit,

@@ -174,6 +174,7 @@ playPause.addEventListener('click', function () {
   console.log(`play ${play}`)
   if (play) {
     play = false
+    playPause.innerHTML = 'Play'
   } else {
     play = true
     playPause.innerHTML = 'Pause'
