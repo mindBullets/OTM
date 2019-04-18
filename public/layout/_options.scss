@@ -1,3 +1,28 @@
 .section--options {
     max-width: 1200px;
+    margin: $spacer auto 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-column-gap: $spacer * 2;
+    padding: 0 $spacer;
+
+    &__header {
+        grid-column: 1 / 2;
+    }
+
+    &__score {
+        grid-row:  2 / 3;
+    }
+
+    .btn--start {
+        padding: 1em 1.5em;
+        justify-self: end;
+        background: $clr-blue;
+        text-decoration: none;
+        color: $clr-white;
+        font-family: $ff-sans-hdrs;
+        text-align: center;
+        box-shadow: $box-shadow;
+
+    }
 }

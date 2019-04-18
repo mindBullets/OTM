@@ -31,6 +31,7 @@ var otm = {
   h: 50,
   w: 50
 }
+
 function resizeCanvas () {
   if (document.documentElement.clientWidth - windowWidthOffset > 1200) {
     ctx.canvas.width = 1200
