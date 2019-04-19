@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,700|Montserrat:200,400");
 @font-face {
   font-family: 'Imnova';
-  src: url(../../imnova_st/Imnova_St.ttf); }
+  src: url(../imnova_st/Imnova_St.ttf); }
 
 /*
 Mobile Perfect Fourth 1.333
@@ -182,7 +182,7 @@ img {
 
 .section--home {
   margin-top: 3.5rem;
-  background: url(../../images/opmhero.jpg);
+  background: url(../images/opmhero.jpg);
   background-size: cover;
   background-position: right;
   padding: 9em 1em;

@@ -52,8 +52,8 @@ class Meteor {
     let yDist = Math.abs(Math.abs(meteor.y) - Math.abs(this.y))
     let rSum = this.r + meteor.r
 
-    // compare distances a^2 + b^2 <= c^2
-    return (Math.pow(xDist, 2) + Math.pow(yDist, 2) <= Math.pow(rSum, 2))
+    // compare distances a^2 + b^2 < c^2
+    return (Math.pow(xDist, 2) + Math.pow(yDist, 2) < Math.pow(rSum, 2))
   }
 
   // y = -1 / 10 x + 11 returns a string
