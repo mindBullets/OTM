@@ -1,5 +1,5 @@
 const defaultFill = '#FFFFFF'
-const darkGrey = '#5D5D5D'
+const black = '#000000'
 const red = '#EF4628'
 const minD = 10
 const maxD = 50
@@ -8,12 +8,15 @@ const windowWidthOffset = 32
 const fps = 60
 const meteorLength = 1000 // interval for each meteor
 
-var images = []
 var playPause = document.getElementById('start')
 var play = false
 var tNow = window.performance.now()
 var tLastUpdate = tNow
 var tLastMeteor = tNow // used to time meteor creation
+var meteorSprite = new Image()
+var sfbg = new Image()
+meteorSprite.src = '../images/meteor.png'
+sfbg.src = '../images/sfbg.jpg'
 
 // avatar placeholder
 class OneTapMap {
@@ -31,7 +34,7 @@ class OneTapMap {
 }
 
 class Meteor {
-  constructor (x, y, r) {
+  constructor (x, y, r, sprite) {
     this.x = x
     this.y = y
     this.r = r
@@ -100,6 +103,7 @@ class View {
   resizeCanvas () {
     if (document.documentElement.clientWidth - windowWidthOffset > 1200) {
       this.ctx.canvas.width = 1200
+      this.ctx.canvas.height = 675
     } else {
       // full height
       this.ctx.canvas.height = (document.documentElement.clientHeight - windowHeightOffset) * 0.75
@@ -109,8 +113,11 @@ class View {
 
   clearRect () {
     // this.ctx.fillStyle = darkGrey
-    this.ctx.fillStyle = 'rgba(93, 93, 93, .9)'
-    this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+    // this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+    // this.ctx.fillStyle = 'rgba(93, 93, 93, .9)'
+
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 1)'
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
   }
 
   drawOtm (x, y, otm) {
@@ -118,23 +125,29 @@ class View {
     this.ctx.fillRect(x, y, otm.h, otm.w)
   }
 
+  drawBg () {
+    this.ctx.drawImage(sfbg, 0, 0)
+  }
+
   drawRent (num) {
     document.getElementById('rent-money').innerHTML = num.toFixed(2)
   }
 
   drawMeteor (meteor) {
-    // draw the meteor
+    // draw the target
     this.ctx.fillStyle = defaultFill
     this.ctx.beginPath()
     this.ctx.arc(meteor.x, meteor.y, meteor.r, 0, Math.PI * 2)
     this.ctx.fill()
-    this.ctx.stroke()
-    // write a number for testing
-    this.ctx.fillStyle = defaultFill
-    this.ctx.font = '30px Arial'
-    this.ctx.fillStyle = 'red'
+    // this.ctx.stroke() //only for
+    // draw meteor
+    this.ctx.drawImage(meteorSprite, meteor.x - meteor.r, meteor.y - meteor.r, meteor.r * 2, meteor.r * 2)
+    // write a number
+    // this.ctx.fillStyle = defaultFill
+    this.ctx.font = '16px Arial'
+    this.ctx.fillStyle = black
     this.ctx.textAlign = 'center'
-    this.ctx.fillText('$' + parseFloat(meteor.getValue()).toFixed(2), meteor.x, meteor.y)
+    this.ctx.fillText('$' + parseFloat(meteor.getValue()).toFixed(2), meteor.x, meteor.y + meteor.r + 30)
   }
 
   drawAllMeteors (list) {
@@ -162,7 +175,6 @@ function getRandomIntInclusive (min, max) {
 var myView = new View(document.getElementById('canvas'))
 var otm = new OneTapMap(myView.ctx.canvas.width - 25, myView.ctx.canvas.height - 50, 50, 50)
 var myMeteors = new MeteorList()
-// var animationId = null
 
 function gameLoop () {
   tNow = window.performance.now()
@@ -178,10 +190,10 @@ function gameLoop () {
   }
   // runs at 60 fps
   if (tNow - tLastUpdate > 1000 / fps && play) {
-    animationId = window.requestAnimationFrame(gameLoop)
+    window.requestAnimationFrame(gameLoop)
     // reset the canvas
     myView.clearRect()
-    // myView.drawBg()
+    myView.drawBg()
     // draw the hero
     myView.drawOtm((myView.ctx.canvas.width / 2), (myView.ctx.canvas.height - 50), otm)
     // increments all meteors then draws them, removes when they touch the bottom
@@ -192,7 +204,7 @@ function gameLoop () {
 
 window.addEventListener('load', () => {
   myView.resizeCanvas()
-  myView.clearRect()
+  myView.drawBg()
   window.requestAnimationFrame(gameLoop)
 })
 
@@ -224,5 +236,6 @@ window.addEventListener('click', e => {
 window.addEventListener('resize', () => {
   myView.resizeCanvas()
   myView.clearRect()
+  myView.drawBg()
   myView.drawOtm((myView.ctx.canvas.width / 2), (myView.ctx.canvas.height - 50), otm)
 })
