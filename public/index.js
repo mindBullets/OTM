@@ -15,21 +15,69 @@ var tLastUpdate = tNow
 var tLastMeteor = tNow // used to time meteor creation
 var meteorSprite = new Image()
 var sfbg = new Image()
+var punch = new Image()
 meteorSprite.src = '../images/meteor.png'
 sfbg.src = '../images/sfbg.jpg'
+punch.src = '../images/punch.png'
+
+var punchSprite = {
+  // [punch right, punch left]
+  frame_sets: [[0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6]],
+  image: punch
+}
 
 // avatar placeholder
 class OneTapMap {
-  constructor (x, y, h, w) {
+  // default h and w is the size of one sprite
+  constructor (x, y, h = 61, w = 69) {
     this.x = x
     this.y = x
     this.h = h
     this.w = w
     this.rent = 0
+    this.animation = new Animation()
   }
 
   updateRent (num) {
     this.rent += parseFloat(num)
+  }
+}
+
+class Animation {
+  constructor (frameSet, delay) {
+    this.delay = delay
+    this.cycleCount = 0 // game cycles that have past since the last frame change
+    this.frameSet = frameSet // selects a row in the spritesheet
+    this.frameIndex = 0
+    this.spriteFrame = 0 // sprite to display
+    this.isPunching = false
+  }
+
+  // switches between left and right versions of the same animation
+  changeAnimationTo (frameSet, newDelay = 4) {
+    if (this.frameSet !== frameSet) {
+      this.delay = newDelay
+      this.cycleCount = 0
+      this.frameSet = frameSet
+      this.frameIndex = 0 // [0 - 1] in this case
+      this.spriteFrame = this.frameSet[this.frameIndex]
+    }
+  }
+
+  // update
+  update () {
+    this.cycleCount++
+    if (this.cycleCount >= this.delay) {
+      this.cycleCount = 0 // reset count
+      if (this.frameIndex >= this.frameSet.length - 1) {
+        this.isPunching = false
+        this.frameIndex = 0 // reset the frame and stop punching
+      } else {
+        this.frameIndex++
+      }
+      console.log(`${this.frameIndex}`)
+      this.spriteFrame = this.frameSet[this.frameIndex]
+    }
   }
 }
 
@@ -138,8 +186,8 @@ class View {
     this.ctx.fillStyle = defaultFill
     this.ctx.beginPath()
     this.ctx.arc(meteor.x, meteor.y, meteor.r, 0, Math.PI * 2)
-    this.ctx.fill()
-    // this.ctx.stroke() //only for
+    // this.ctx.fill() only for testing
+    // this.ctx.stroke() //only for testing
     // draw meteor
     this.ctx.drawImage(meteorSprite, meteor.x - meteor.r, meteor.y - meteor.r, meteor.r * 2, meteor.r * 2)
     // write a number
@@ -165,6 +213,7 @@ class View {
   }
 }
 
+// helper function
 function getRandomIntInclusive (min, max) {
   min = Math.ceil(min)
   max = Math.floor(max)
@@ -172,9 +221,9 @@ function getRandomIntInclusive (min, max) {
 }
 
 // set up the loop
-var myView = new View(document.getElementById('canvas'))
-var otm = new OneTapMap(myView.ctx.canvas.width - 25, myView.ctx.canvas.height - 50, 50, 50)
-var myMeteors = new MeteorList()
+const myView = new View(document.getElementById('canvas'))
+const otm = new OneTapMap(myView.ctx.canvas.width - 25, myView.ctx.canvas.height - 50)
+const myMeteors = new MeteorList()
 
 function gameLoop () {
   tNow = window.performance.now()
@@ -187,6 +236,7 @@ function gameLoop () {
     let m = new Meteor(x, y, r)
     myMeteors.addMeteor(m)
     tLastMeteor = tNow
+    otm.isPunching = false
   }
   // runs at 60 fps
   if (tNow - tLastUpdate > 1000 / fps && play) {
@@ -195,13 +245,26 @@ function gameLoop () {
     myView.clearRect()
     myView.drawBg()
     // draw the hero
-    myView.drawOtm((myView.ctx.canvas.width / 2), (myView.ctx.canvas.height - 50), otm)
+    if (otm.isPunching) {
+      // myView.ctx.drawImage(punchSprite.image, otm.x, otm.y)
+      myView.ctx.drawImage(punchSprite.image, otm.animation.frameIndex * otm.w, 0, otm.w, otm.h, otm.x, otm.y, otm.w, otm.h)
+
+      //   // myView.drawOtm((myView.ctx.canvas.width / 2), (myView.ctx.canvas.height - 50), otm)
+      otm.animation.update()
+      //   myMeteors.moveMeteors(myView.getSpeed(fps))
+      //   myView.drawAllMeteors(myMeteors)
+      //   myView.drawImage(punchSprite.image, otm.animation.spriteFrame * otm.w, 0, otm.w, otm.h, Math.floor(otm.x), Math.floor(otm.y), otm.w, otm.h)
+    }
+
     // increments all meteors then draws them, removes when they touch the bottom
     myMeteors.moveMeteors(myView.getSpeed(fps))
     myView.drawAllMeteors(myMeteors)
   }
 };
 
+/* --------------------- */
+/* -----Listeners------- */
+/* --------------------- */
 window.addEventListener('load', () => {
   myView.resizeCanvas()
   myView.drawBg()
@@ -226,6 +289,10 @@ window.addEventListener('click', e => {
       if (m.didClick(e)) {
         otm.updateRent(m.getValue())
         myView.drawRent(otm.rent)
+        otm.isPunching = true
+        otm.animation.changeAnimationTo(punchSprite.frame_sets[0])
+        otm.x = e.offsetX
+        otm.y = e.offsetY
         myMeteors.removeMeteor(i)
       }
     })
