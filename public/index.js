@@ -51,15 +51,16 @@ class Animation {
     this.frameIndex = 0
     this.spriteFrame = 0 // sprite to display
     this.isPunching = false
+    this.canDestroyMeteor = false
   }
 
   // switches between left and right versions of the same animation
-  changeAnimationTo (frameSet, newDelay = 4) {
+  changeAnimationTo (frameSet, newDelay = 3) {
     if (this.frameSet !== frameSet) {
       this.delay = newDelay
       this.cycleCount = 0
       this.frameSet = frameSet
-      this.frameIndex = 0 // [0 - 1] in this case
+      this.frameIndex = 0 // [0 - 7] in this case
       this.spriteFrame = this.frameSet[this.frameIndex]
     }
   }
@@ -69,13 +70,13 @@ class Animation {
     this.cycleCount++
     if (this.cycleCount >= this.delay) {
       this.cycleCount = 0 // reset count
-      if (this.frameIndex >= this.frameSet.length - 1) {
-        this.isPunching = false
-        this.frameIndex = 0 // reset the frame and stop punching
-      } else {
+      if (this.frameIndex <= this.frameSet.length - 1) {
         this.frameIndex++
+      } else {
+        this.frameIndex = 0 // reset the frame and stop punching
+        this.isPunching = false
+        this.canDestroyMeteor = true
       }
-      console.log(`${this.frameIndex}`)
       this.spriteFrame = this.frameSet[this.frameIndex]
     }
   }
@@ -113,6 +114,7 @@ class Meteor {
 class MeteorList {
   constructor () {
     this.meteors = []
+    this.i = null // use this to remove in main loop
   }
 
   length () {
@@ -121,6 +123,7 @@ class MeteorList {
 
   removeMeteor (i) {
     this.meteors.splice(i, 1)
+    this.i = null
   }
 
   moveMeteors (fallRate) {
@@ -236,24 +239,25 @@ function gameLoop () {
     let m = new Meteor(x, y, r)
     myMeteors.addMeteor(m)
     tLastMeteor = tNow
-    otm.isPunching = false
   }
   // runs at 60 fps
   if (tNow - tLastUpdate > 1000 / fps && play) {
     window.requestAnimationFrame(gameLoop)
     // reset the canvas
     myView.clearRect()
-    myView.drawBg()
-    // draw the hero
-    if (otm.isPunching) {
-      // myView.ctx.drawImage(punchSprite.image, otm.x, otm.y)
-      myView.ctx.drawImage(punchSprite.image, otm.animation.frameIndex * otm.w, 0, otm.w, otm.h, otm.x, otm.y, otm.w, otm.h)
+    //myView.drawBg()
 
-      //   // myView.drawOtm((myView.ctx.canvas.width / 2), (myView.ctx.canvas.height - 50), otm)
+    // draw the hero
+    if (otm.animation.isPunching) {
+      myView.ctx.drawImage(punchSprite.image, otm.animation.frameIndex * otm.w, 0, otm.w, otm.h, myMeteors.meteors[myMeteors.i].x - (myMeteors.meteors[myMeteors.i].r + otm.w - 5), myMeteors.meteors[myMeteors.i].y - 20, otm.w, otm.h)
+
       otm.animation.update()
-      //   myMeteors.moveMeteors(myView.getSpeed(fps))
-      //   myView.drawAllMeteors(myMeteors)
-      //   myView.drawImage(punchSprite.image, otm.animation.spriteFrame * otm.w, 0, otm.w, otm.h, Math.floor(otm.x), Math.floor(otm.y), otm.w, otm.h)
+      // myView.drawOtm((myView.ctx.canvas.width / 2), (myView.ctx.canvas.height - 50), otm)
+
+      if (otm.animation.canDestroyMeteor && myMeteors.i != null) {
+        myMeteors.removeMeteor(myMeteors.i)
+        otm.animation.canDestroyMeteor = false
+      }
     }
 
     // increments all meteors then draws them, removes when they touch the bottom
@@ -267,7 +271,7 @@ function gameLoop () {
 /* --------------------- */
 window.addEventListener('load', () => {
   myView.resizeCanvas()
-  myView.drawBg()
+  // myView.drawBg()
   window.requestAnimationFrame(gameLoop)
 })
 
@@ -285,17 +289,18 @@ playPause.addEventListener('click', () => {
 // event listeners
 window.addEventListener('click', e => {
   if (myMeteors.length() > 0 && play) {
-    myMeteors.meteors.forEach((m, i) => {
-      if (m.didClick(e)) {
-        otm.updateRent(m.getValue())
+    for (let i = 0; i < myMeteors.length(); i++) {
+      if (myMeteors.meteors[i].didClick(e)) { // make this a for loop and break
+        otm.updateRent(myMeteors.meteors[i].getValue())
         myView.drawRent(otm.rent)
-        otm.isPunching = true
+        otm.animation.isPunching = true
         otm.animation.changeAnimationTo(punchSprite.frame_sets[0])
         otm.x = e.offsetX
         otm.y = e.offsetY
-        myMeteors.removeMeteor(i)
+        myMeteors.i = i
+        break
       }
-    })
+    }
   }
 })
 
