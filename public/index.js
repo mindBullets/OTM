@@ -16,9 +16,12 @@ var tLastMeteor = tNow // used to time meteor creation
 var meteorSprite = new Image()
 var sfbg = new Image()
 var punch = new Image()
+var punchSound = new Audio()
+
 meteorSprite.src = '../images/meteor.png'
-sfbg.src = '../images/sfbg.jpg'
+sfbg.src = '../images/skybg.gif'
 punch.src = '../images/punch.png'
+punchSound.src = '../audio/punchSound.mp3'
 
 var punchSprite = {
   // [punch right, punch left]
@@ -100,7 +103,6 @@ class Meteor {
     let xDist = Math.abs(meteor.x - this.x)
     let yDist = Math.abs(Math.abs(meteor.y) - Math.abs(this.y))
     let rSum = this.r + meteor.r
-
     // compare distances a^2 + b^2 < c^2
     return (Math.pow(xDist, 2) + Math.pow(yDist, 2) < Math.pow(rSum, 2))
   }
@@ -163,10 +165,6 @@ class View {
   }
 
   clearRect () {
-    // this.ctx.fillStyle = darkGrey
-    // this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
-    // this.ctx.fillStyle = 'rgba(93, 93, 93, .9)'
-
     this.ctx.fillStyle = 'rgba(0, 0, 0, 1)'
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
   }
@@ -185,19 +183,20 @@ class View {
   }
 
   drawMeteor (meteor) {
-    // draw the target
+    // draw the hurtbox
     this.ctx.fillStyle = defaultFill
     this.ctx.beginPath()
     this.ctx.arc(meteor.x, meteor.y, meteor.r, 0, Math.PI * 2)
-    // this.ctx.fill() only for testing
-    // this.ctx.stroke() //only for testing
     // draw meteor
     this.ctx.drawImage(meteorSprite, meteor.x - meteor.r, meteor.y - meteor.r, meteor.r * 2, meteor.r * 2)
     // write a number
-    // this.ctx.fillStyle = defaultFill
     this.ctx.font = '16px Arial'
-    this.ctx.fillStyle = black
+    this.ctx.fillStyle = defaultFill
     this.ctx.textAlign = 'center'
+    this.ctx.shadowOffsetY = 5
+    this.ctx.shadowOffsetX = 0
+    this.ctx.shadowBlur = 8
+    this.ctx.shadowColor = black
     this.ctx.fillText('$' + parseFloat(meteor.getValue()).toFixed(2), meteor.x, meteor.y + meteor.r + 30)
   }
 
@@ -228,6 +227,10 @@ const myView = new View(document.getElementById('canvas'))
 const otm = new OneTapMap(myView.ctx.canvas.width - 25, myView.ctx.canvas.height - 50)
 const myMeteors = new MeteorList()
 
+
+/* --------------------- */
+/* -----Game Loop------- */
+/* --------------------- */
 function gameLoop () {
   tNow = window.performance.now()
   // 1 meteor/second
@@ -245,7 +248,7 @@ function gameLoop () {
     window.requestAnimationFrame(gameLoop)
     // reset the canvas
     myView.clearRect()
-    //myView.drawBg()
+    myView.drawBg()
 
     // draw the hero
     if (otm.animation.isPunching) {
@@ -253,8 +256,10 @@ function gameLoop () {
 
       otm.animation.update()
       // myView.drawOtm((myView.ctx.canvas.width / 2), (myView.ctx.canvas.height - 50), otm)
+      punchSound.play()
 
       if (otm.animation.canDestroyMeteor && myMeteors.i != null) {
+        // punchSound.play()
         myMeteors.removeMeteor(myMeteors.i)
         otm.animation.canDestroyMeteor = false
       }
@@ -271,7 +276,7 @@ function gameLoop () {
 /* --------------------- */
 window.addEventListener('load', () => {
   myView.resizeCanvas()
-  // myView.drawBg()
+  myView.drawBg()
   window.requestAnimationFrame(gameLoop)
 })
 
