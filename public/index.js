@@ -8,7 +8,9 @@ const windowWidthOffset = 32
 const fps = 60
 const meteorLength = 1000 // interval for each meteor
 
+var music = document.getElementById('music')
 var playPause = document.getElementById('start')
+var canPlayMusic = false
 var play = false
 var tNow = window.performance.now()
 var tLastUpdate = tNow
@@ -17,11 +19,12 @@ var meteorSprite = new Image()
 var sfbg = new Image()
 var punch = new Image()
 var punchSound = new Audio()
-
+var bgMusic = new Audio()
 meteorSprite.src = '../images/meteor.png'
 sfbg.src = '../images/skybg.gif'
 punch.src = '../images/punch.png'
 punchSound.src = '../audio/punchSound.mp3'
+bgMusic.src = '../audio/GenosTheme.mp3'
 
 var punchSprite = {
   // [punch right, punch left]
@@ -182,22 +185,6 @@ class View {
     document.getElementById('rent-money').innerHTML = num.toFixed(2)
   }
 
-  // the intent was to have the range thumb be a walking gif when slow, sprint when fast
-  // changeSliderThumb (value) {
-  //   let slider = document.getElementById('slider')
-  //   let sClass = document.getElementsByClassName('options__slider')
-  //   let v = value
-  //   console.log(`v = ${v}`)
-  //   // initial dimensions of sprite top left clockwise
-  //   if (v >= 10 && v < 40) {
-  //     slider.style.backgroundPosition = '0 0'
-  //   } else if (v >= 40 && v < 70) {
-  //     slider.style.backgroundPosition = '58 0'
-  //   } else {
-  //     slider.style.backgroundPosition = '116 0'
-  //   }
-  // }
-
   drawMeteor (meteor) {
     // draw the hurtbox
     this.ctx.fillStyle = defaultFill
@@ -219,7 +206,9 @@ class View {
   drawAllMeteors (list) {
     list.meteors.forEach((meteor, i) => {
       this.drawMeteor(meteor)
-      if (meteor.y + meteor.r >= this.ctx.canvas.height) {
+      /* let the meteor go completely off the screen. to give users a chance
+      to click allow for some extra time to let the punch animation finish */
+      if (meteor.y - (meteor.r * 4) >= this.ctx.canvas.height) {
         list.removeMeteor(i)
       }
     })
@@ -242,6 +231,9 @@ function getRandomIntInclusive (min, max) {
 const myView = new View(document.getElementById('canvas'))
 const otm = new OneTapMap(myView.ctx.canvas.width - 25, myView.ctx.canvas.height - 50)
 const myMeteors = new MeteorList()
+let tempPunchX = 0
+let tempPunchY = 0
+let tempPunchR = 0
 
 /* --------------------- */
 /* -----Game Loop------- */
@@ -265,8 +257,11 @@ function gameLoop () {
     myView.clearRect()
     myView.drawBg()
     // draw the hero
+    tempPunchX = myMeteors.meteors[myMeteors.i].x
+    tempPunchY = myMeteors.meteors[myMeteors.i].y
+    tempPunchR = myMeteors.meteors[myMeteors.i].r
     if (otm.animation.isPunching) {
-      myView.ctx.drawImage(punchSprite.image, otm.animation.frameIndex * otm.w, 0, otm.w, otm.h, myMeteors.meteors[myMeteors.i].x - (myMeteors.meteors[myMeteors.i].r + otm.w - 5), myMeteors.meteors[myMeteors.i].y - 20, otm.w, otm.h)
+      myView.ctx.drawImage(punchSprite.image, otm.animation.frameIndex * otm.w, 0, otm.w, otm.h, tempPunchX - (tempPunchR + otm.w - 5), tempPunchY - 20, otm.w, otm.h)
       otm.animation.update()
       punchSound.play()
       if (otm.animation.canDestroyMeteor && myMeteors.i != null) {
@@ -301,6 +296,18 @@ playPause.addEventListener('click', () => {
   }
 })
 
+music.addEventListener('click', () => {
+  if (canPlayMusic) {
+    bgMusic.pause()
+    music.innerHTML = 'Music'
+    canPlayMusic = false
+  } else {
+    bgMusic.play()
+    music.innerHTML = 'Mute'
+    canPlayMusic = true
+  }
+})
+
 // event listeners
 window.addEventListener('click', e => {
   if (myMeteors.length() > 0 && play) {
@@ -319,14 +326,9 @@ window.addEventListener('click', e => {
   }
 })
 
-// document.getElementById('slider').addEventListener('input', e => {
-//   myView.changeSliderThumb(e.srcElement.value)
-// })
-
 // adjust the canvas on resize
 window.addEventListener('resize', () => {
   myView.resizeCanvas()
   myView.clearRect()
   myView.drawBg()
-  myView.drawOtm((myView.ctx.canvas.width / 2), (myView.ctx.canvas.height - 50), otm)
 })

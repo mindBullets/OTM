@@ -182,7 +182,8 @@ img {
     display: none; }
     @media only screen and (min-width: 576px) {
       .nav .logo {
-        display: block; } }
+        display: block;
+        max-width: 150px; } }
   .nav a {
     text-decoration: none;
     font-weight: 700;
@@ -216,7 +217,7 @@ img {
   display: grid;
   -ms-grid-columns: (1fr)[3];
       grid-template-columns: repeat(3, 1fr);
-  grid-gap: 2em;
+  grid-gap: 1em;
   max-width: 1200px;
   grid-gap: 0.5em; }
   .section--options__header {
@@ -231,27 +232,53 @@ img {
     -ms-grid-row-span: 1;
     grid-row: 2 / 3; }
   .section--options .options__label {
-    -ms-grid-row: 1;
+    -ms-grid-row: 3;
     -ms-grid-row-span: 1;
-    grid-row: 1 / 2;
-    -ms-grid-column: 2;
+    grid-row: 3 / 4;
+    -ms-grid-column: 1;
     -ms-grid-column-span: 1;
-    grid-column: 2 / 3;
+    grid-column: 1 / 2;
     -ms-flex-item-align: end;
         -ms-grid-row-align: end;
         align-self: end; }
-  .section--options .btn--start {
+  .section--options .btn {
     padding: 1em 1.5em;
     margin-bottom: 1em;
-    -ms-grid-column-align: end;
-        justify-self: end;
-    background: #2D5863;
     text-decoration: none;
-    color: #ffffff;
     font-family: "Imnova", "Montserrat", sans-serif;
     text-align: center;
-    -webkit-box-shadow: 0 0 0.5em rgba(93, 93, 93, 0.6);
-            box-shadow: 0 0 0.5em rgba(93, 93, 93, 0.6); }
+    -webkit-transition: -webkit-transform 100ms ease-in, -webkit-box-shadow 100ms ease-in;
+    transition: -webkit-transform 100ms ease-in, -webkit-box-shadow 100ms ease-in;
+    transition: transform 100ms ease-in, box-shadow 100ms ease-in;
+    transition: transform 100ms ease-in, box-shadow 100ms ease-in, -webkit-transform 100ms ease-in, -webkit-box-shadow 100ms ease-in; }
+    .section--options .btn:hover {
+      -webkit-transform: scale(1.01);
+              transform: scale(1.01);
+      -webkit-box-shadow: 0 0 0.5em rgba(93, 93, 93, 0.6);
+              box-shadow: 0 0 0.5em rgba(93, 93, 93, 0.6); }
+  .section--options .btn--music {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2 / 3;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
+    grid-row: 1 / 2;
+    background: #5D5D5D;
+    color: #ffffff;
+    -ms-grid-column-align: end;
+        justify-self: end; }
+    .section--options .btn--music:hover {
+      background: #6a6a6a; }
+  .section--options .btn--start {
+    -ms-grid-column: 3;
+    -ms-grid-column-span: 1;
+    grid-column: 3 / 4;
+    color: #ffffff;
+    -ms-grid-column-align: end;
+        justify-self: end;
+    background: #2D5863; }
+    .section--options .btn--start:hover {
+      background: #356875; }
   .section--options .options__slider {
     -webkit-appearance: none;
     /* Override default CSS styles */
@@ -265,7 +292,10 @@ img {
     transition: opacity 100ms;
     -ms-grid-column: 2;
     -ms-grid-column-span: 2;
-    grid-column: 2 / 4; }
+    grid-column: 2 / 4;
+    -ms-grid-row: 3;
+    -ms-grid-row-span: 1;
+    grid-row: 3 / 4; }
     .section--options .options__slider:hover {
       opacity: 1; }
   .section--options .options__slider:hover {
@@ -292,7 +322,7 @@ img {
       display: grid;
       -ms-grid-columns: (1fr)[3];
           grid-template-columns: repeat(3, 1fr);
-      grid-gap: 2em;
+      grid-gap: 1em;
       max-width: 1200px; }
       .section--options__header {
         -ms-grid-column: 1;
@@ -303,12 +333,26 @@ img {
         -ms-grid-row-span: 1;
         grid-row: 2 / 3; }
       .section--options .options__label {
-        -ms-grid-row: 1;
+        -ms-grid-row: 2;
         -ms-grid-row-span: 1;
-        grid-row: 1 / 2;
+        grid-row: 2 / 3;
         -ms-grid-column: 2;
         -ms-grid-column-span: 1;
-        grid-column: 2 / 3; } }
+        grid-column: 2 / 3; }
+      .section--options .btn--music {
+        -ms-grid-column: 3;
+        -ms-grid-column-span: 1;
+        grid-column: 3 / 4;
+        -ms-grid-row: 2;
+        -ms-grid-row-span: 1;
+        grid-row: 2 / 3; }
+      .section--options .btn--start {
+        -ms-grid-column: 3;
+        -ms-grid-column-span: 1;
+        grid-column: 3 / 4;
+        -ms-grid-row: 1;
+        -ms-grid-row-span: 1;
+        grid-row: 1 / 2; } }
 
 canvas {
   border: 1px solid #5D5D5D;
@@ -368,7 +412,7 @@ canvas {
       display: grid;
       -ms-grid-columns: (1fr)[3];
           grid-template-columns: repeat(3, 1fr);
-      grid-gap: 2em;
+      grid-gap: 1em;
       max-width: 1200px; } }
 
 .footer {
