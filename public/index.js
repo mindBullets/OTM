@@ -41,7 +41,7 @@ class OneTapMap {
     this.h = h
     this.w = w
     this.rent = 0
-    this.animation = new Animation()
+    this.animation = new Animation(0, 2)
   }
 
   updateRent (num) {
@@ -61,7 +61,7 @@ class Animation {
   }
 
   // switches between left and right versions of the same animation
-  changeAnimationTo (frameSet, newDelay = 3) {
+  changeAnimationTo (frameSet, newDelay = 2) {
     if (this.frameSet !== frameSet) {
       this.delay = newDelay
       this.cycleCount = 0
@@ -119,7 +119,6 @@ class Meteor {
 class MeteorList {
   constructor () {
     this.meteors = []
-    this.i = null // use this to remove in main loop
   }
 
   length () {
@@ -200,12 +199,21 @@ class View {
     this.ctx.shadowOffsetX = 0
     this.ctx.shadowBlur = 8
     this.ctx.shadowColor = black
-    this.ctx.fillText('$' + parseFloat(meteor.getValue()).toFixed(2), meteor.x, meteor.y + meteor.r + 30)
+    // this.ctx.fillText('$' + parseFloat(meteor.getValue()).toFixed(2), meteor.x, meteor.y + meteor.r + 30)
   }
 
   drawAllMeteors (list) {
     list.meteors.forEach((meteor, i) => {
       this.drawMeteor(meteor)
+      this.ctx.font = '16px Arial'
+      this.ctx.fillStyle = defaultFill
+      this.ctx.textAlign = 'center'
+      this.ctx.shadowOffsetY = 5
+      this.ctx.shadowOffsetX = 0
+      this.ctx.shadowBlur = 8
+      this.ctx.shadowColor = black
+      this.ctx.fillText( `i = ${i}`, meteor.x, meteor.y + meteor.r + 30)
+
       /* let the meteor go completely off the screen. to give users a chance
       to click allow for some extra time to let the punch animation finish */
       if (meteor.y - (meteor.r * 4) >= this.ctx.canvas.height) {
@@ -231,9 +239,10 @@ function getRandomIntInclusive (min, max) {
 const myView = new View(document.getElementById('canvas'))
 const otm = new OneTapMap(myView.ctx.canvas.width - 25, myView.ctx.canvas.height - 50)
 const myMeteors = new MeteorList()
-let tempPunchX = 0
-let tempPunchY = 0
-let tempPunchR = 0
+var tempPunchX = 0
+var tempPunchY = 0
+var tempPunchR = 0
+var tempIndex = 0
 
 /* --------------------- */
 /* -----Game Loop------- */
@@ -257,18 +266,20 @@ function gameLoop () {
     myView.clearRect()
     myView.drawBg()
     // draw the hero
-    tempPunchX = myMeteors.meteors[myMeteors.i].x
-    tempPunchY = myMeteors.meteors[myMeteors.i].y
-    tempPunchR = myMeteors.meteors[myMeteors.i].r
     if (otm.animation.isPunching) {
+      tempPunchX = myMeteors.meteors[tempIndex].x
+      tempPunchY = myMeteors.meteors[tempIndex].y
+      tempPunchR = myMeteors.meteors[tempIndex].r
+      // draw the punch
       myView.ctx.drawImage(punchSprite.image, otm.animation.frameIndex * otm.w, 0, otm.w, otm.h, tempPunchX - (tempPunchR + otm.w - 5), tempPunchY - 20, otm.w, otm.h)
       otm.animation.update()
       punchSound.play()
-      if (otm.animation.canDestroyMeteor && myMeteors.i != null) {
-        // punchSound.play()
-        myMeteors.removeMeteor(myMeteors.i)
+      if (otm.animation.canDestroyMeteor && tempIndex !== undefined) {
+        myMeteors.removeMeteor(tempIndex)
         otm.animation.canDestroyMeteor = false
       }
+    } else if (myMeteors.meteors[tempIndex] === undefined && otm.animation.isPunching) {
+      console.log(`tempPunchX: ${tempPunchX} | myMeteors.i: ${myMeteors.i} | tempIndex: ${tempIndex}`)
     }
     // increments all meteors then draws them, removes when they touch the bottom
     myMeteors.moveMeteors(myView.getSpeed(fps))
@@ -319,7 +330,8 @@ window.addEventListener('click', e => {
         otm.animation.changeAnimationTo(punchSprite.frame_sets[0])
         otm.x = e.offsetX
         otm.y = e.offsetY
-        myMeteors.i = i
+        tempIndex = i
+        console.log(`In click event | tempIndex: ${tempIndex}`)
         break
       }
     }
