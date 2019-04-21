@@ -157,9 +157,9 @@ class View {
     if (document.documentElement.clientWidth - windowWidthOffset > 1200) {
       this.ctx.canvas.width = 1200
       this.ctx.canvas.height = 675
-    } else {
+    } else if (document.documentElement.clientHeight - windowWidthOffset >= 675) {
       // full height
-      this.ctx.canvas.height = (document.documentElement.clientHeight - windowHeightOffset) * 0.75
+      this.ctx.canvas.height = 675 - 100 // leave room for options
       this.ctx.canvas.width = document.documentElement.clientWidth - windowWidthOffset
     }
   }
@@ -181,6 +181,22 @@ class View {
   drawRent (num) {
     document.getElementById('rent-money').innerHTML = num.toFixed(2)
   }
+
+  // the intent was to have the range thumb be a walking gif when slow, sprint when fast
+  // changeSliderThumb (value) {
+  //   let slider = document.getElementById('slider')
+  //   let sClass = document.getElementsByClassName('options__slider')
+  //   let v = value
+  //   console.log(`v = ${v}`)
+  //   // initial dimensions of sprite top left clockwise
+  //   if (v >= 10 && v < 40) {
+  //     slider.style.backgroundPosition = '0 0'
+  //   } else if (v >= 40 && v < 70) {
+  //     slider.style.backgroundPosition = '58 0'
+  //   } else {
+  //     slider.style.backgroundPosition = '116 0'
+  //   }
+  // }
 
   drawMeteor (meteor) {
     // draw the hurtbox
@@ -227,7 +243,6 @@ const myView = new View(document.getElementById('canvas'))
 const otm = new OneTapMap(myView.ctx.canvas.width - 25, myView.ctx.canvas.height - 50)
 const myMeteors = new MeteorList()
 
-
 /* --------------------- */
 /* -----Game Loop------- */
 /* --------------------- */
@@ -249,22 +264,17 @@ function gameLoop () {
     // reset the canvas
     myView.clearRect()
     myView.drawBg()
-
     // draw the hero
     if (otm.animation.isPunching) {
       myView.ctx.drawImage(punchSprite.image, otm.animation.frameIndex * otm.w, 0, otm.w, otm.h, myMeteors.meteors[myMeteors.i].x - (myMeteors.meteors[myMeteors.i].r + otm.w - 5), myMeteors.meteors[myMeteors.i].y - 20, otm.w, otm.h)
-
       otm.animation.update()
-      // myView.drawOtm((myView.ctx.canvas.width / 2), (myView.ctx.canvas.height - 50), otm)
       punchSound.play()
-
       if (otm.animation.canDestroyMeteor && myMeteors.i != null) {
         // punchSound.play()
         myMeteors.removeMeteor(myMeteors.i)
         otm.animation.canDestroyMeteor = false
       }
     }
-
     // increments all meteors then draws them, removes when they touch the bottom
     myMeteors.moveMeteors(myView.getSpeed(fps))
     myView.drawAllMeteors(myMeteors)
@@ -308,6 +318,10 @@ window.addEventListener('click', e => {
     }
   }
 })
+
+// document.getElementById('slider').addEventListener('input', e => {
+//   myView.changeSliderThumb(e.srcElement.value)
+// })
 
 // adjust the canvas on resize
 window.addEventListener('resize', () => {

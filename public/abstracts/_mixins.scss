@@ -41,4 +41,5 @@
     grid-template-columns: repeat( $columns, 1fr );
     grid-gap: $spacer * 2;
     max-width: 1200px;
+    @content;
 }
