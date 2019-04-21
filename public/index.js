@@ -10,9 +10,7 @@ const bgWidth = 1200
 const fps = 60
 const meteorLength = 1000 // interval for each meteor
 
-// var music = document.getElementById('music')
 var playPause = document.getElementById('start')
-// var canPlayMusic = false
 var play = false
 var tNow = window.performance.now()
 var tLastUpdate = tNow
@@ -21,12 +19,6 @@ var meteorSprite = new Image()
 var sfbg = new Image()
 var punch = new Image()
 var punchSound = new Audio()
-// var bgMusic = new Audio()
-
-// bgMusic.src = '../audio/GenosTheme.mp3'
-// bgMusic.addEventListener('load', e => {
-//   canPlayMusic = true
-// })
 
 punchSound.src = '../audio/punchSound.mp3'
 meteorSprite.src = '../images/meteor.png'
@@ -39,7 +31,6 @@ var punchSprite = {
   image: punch
 }
 
-// avatar placeholder
 class OneTapMap {
   // default h and w is the size of one sprite
   constructor (x, y, h = 61, w = 69) {
@@ -169,22 +160,18 @@ class View {
       // width > 1200 and height > 675 both are bigger than max bg dimensions
       this.ctx.canvas.width = bgWidth
       this.ctx.canvas.height = bgHeight
-      console.log('full bg')
     } else if (cWidth > bgWidth && cHeight <= bgHeight) {
       // width > 1200 and height <= 675 wide and short
       this.ctx.canvas.width = bgWidth
-      this.ctx.canvas.height = cHeight - windowHeightOffset // subtract a bit later for the ui?
-      console.log(`wide and short: ${document.documentElement.clientHeight}`)
+      this.ctx.canvas.height = cHeight - windowHeightOffset
     } else if (cWidth < bgWidth && cHeight >= bgHeight) {
       // width < 1200 and height <= 675 skinny and tall
       this.ctx.canvas.width = cWidth - windowWidthOffset
       this.ctx.canvas.height = bgHeight
-      console.log('skinny and tall')
     } else {
       // width < 1200 and height < 675 skinny and short
       this.ctx.canvas.width = cWidth - windowWidthOffset
       this.ctx.canvas.height = cHeight
-      console.log('small small')
     }
   }
 
@@ -256,7 +243,7 @@ class View {
   }
 }
 
-// helper function
+// helper
 function getRandomIntInclusive (min, max) {
   min = Math.ceil(min)
   max = Math.floor(max)
@@ -307,8 +294,6 @@ function gameLoop () {
         myMeteors.removeMeteor(tempIndex)
         otm.animation.canDestroyMeteor = false
       }
-    } else if (myMeteors.meteors[tempIndex] === undefined && otm.animation.isPunching) {
-      console.log(`tempPunchX: ${tempPunchX} | myMeteors.i: ${myMeteors.i} | tempIndex: ${tempIndex}`)
     }
     // increments all meteors then draws them, removes when they touch the bottom
     myMeteors.moveMeteors(myView.getSpeed(fps))
@@ -336,23 +321,10 @@ playPause.addEventListener('click', () => {
   }
 })
 
-// music.addEventListener('click', () => {
-//   if (canPlayMusic) {
-//     bgMusic.pause()
-//     music.innerHTML = 'Music'
-//     canPlayMusic = false
-//   } else if (!canPlayMusic) {
-//     bgMusic.play()
-//     music.innerHTML = 'Mute'
-//     canPlayMusic = true
-//   }
-// })
-
-// event listeners
 window.addEventListener('click', e => {
   if (myMeteors.length() > 0 && play) {
     for (let i = 0; i < myMeteors.length(); i++) {
-      if (myMeteors.meteors[i].didClick(e)) { // make this a for loop and break
+      if (myMeteors.meteors[i].didClick(e)) {
         otm.updateRent(myMeteors.meteors[i].getValue())
         myView.drawRent(otm.rent)
         otm.animation.isPunching = true
@@ -360,14 +332,12 @@ window.addEventListener('click', e => {
         otm.x = e.offsetX
         otm.y = e.offsetY
         tempIndex = i
-        console.log(`In click event | tempIndex: ${tempIndex}`)
         break
       }
     }
   }
 })
 
-// adjust the canvas on resize
 window.addEventListener('resize', () => {
   myView.resizeCanvas()
   myView.clearRect()
