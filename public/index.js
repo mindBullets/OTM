@@ -5,12 +5,14 @@ const minD = 10
 const maxD = 50
 const windowHeightOffset = 50
 const windowWidthOffset = 32
+const bgHeight = 675
+const bgWidth = 1200
 const fps = 60
 const meteorLength = 1000 // interval for each meteor
 
-var music = document.getElementById('music')
+// var music = document.getElementById('music')
 var playPause = document.getElementById('start')
-var canPlayMusic = false
+// var canPlayMusic = false
 var play = false
 var tNow = window.performance.now()
 var tLastUpdate = tNow
@@ -19,12 +21,17 @@ var meteorSprite = new Image()
 var sfbg = new Image()
 var punch = new Image()
 var punchSound = new Audio()
-var bgMusic = new Audio()
+// var bgMusic = new Audio()
+
+// bgMusic.src = '../audio/GenosTheme.mp3'
+// bgMusic.addEventListener('load', e => {
+//   canPlayMusic = true
+// })
+
+punchSound.src = '../audio/punchSound.mp3'
 meteorSprite.src = '../images/meteor.png'
 sfbg.src = '../images/skybg.gif'
 punch.src = '../images/punch.png'
-punchSound.src = '../audio/punchSound.mp3'
-bgMusic.src = '../audio/GenosTheme.mp3'
 
 var punchSprite = {
   // [punch right, punch left]
@@ -156,13 +163,28 @@ class View {
   }
 
   resizeCanvas () {
-    if (document.documentElement.clientWidth - windowWidthOffset > 1200) {
-      this.ctx.canvas.width = 1200
-      this.ctx.canvas.height = 675
-    } else if (document.documentElement.clientHeight - windowWidthOffset >= 675) {
-      // full height
-      this.ctx.canvas.height = 675 - 100 // leave room for options
-      this.ctx.canvas.width = document.documentElement.clientWidth - windowWidthOffset
+    let cHeight = document.documentElement.clientHeight
+    let cWidth = document.documentElement.clientWidth
+    if (cWidth > bgWidth && cHeight > bgHeight) {
+      // width > 1200 and height > 675 both are bigger than max bg dimensions
+      this.ctx.canvas.width = bgWidth
+      this.ctx.canvas.height = bgHeight
+      console.log('full bg')
+    } else if (cWidth > bgWidth && cHeight <= bgHeight) {
+      // width > 1200 and height <= 675 wide and short
+      this.ctx.canvas.width = bgWidth
+      this.ctx.canvas.height = cHeight - windowHeightOffset // subtract a bit later for the ui?
+      console.log(`wide and short: ${document.documentElement.clientHeight}`)
+    } else if (cWidth < bgWidth && cHeight >= bgHeight) {
+      // width < 1200 and height <= 675 skinny and tall
+      this.ctx.canvas.width = cWidth - windowWidthOffset
+      this.ctx.canvas.height = bgHeight
+      console.log('skinny and tall')
+    } else {
+      // width < 1200 and height < 675 skinny and short
+      this.ctx.canvas.width = cWidth - windowWidthOffset
+      this.ctx.canvas.height = cHeight
+      console.log('small small')
     }
   }
 
@@ -181,7 +203,14 @@ class View {
   }
 
   drawRent (num) {
-    document.getElementById('rent-money').innerHTML = num.toFixed(2)
+    this.ctx.font = '28px Arial'
+    this.ctx.fillStyle = defaultFill
+    this.ctx.textAlign = 'left'
+    this.ctx.shadowOffsetY = 5
+    this.ctx.shadowOffsetX = 0
+    this.ctx.shadowBlur = 8
+    this.ctx.shadowColor = black
+    this.ctx.fillText('Money: $' + num.toFixed(2), windowWidthOffset, this.ctx.canvas.height - windowHeightOffset)
   }
 
   drawMeteor (meteor) {
@@ -264,6 +293,7 @@ function gameLoop () {
     // reset the canvas
     myView.clearRect()
     myView.drawBg()
+    myView.drawRent(otm.rent)
     // draw the hero
     if (otm.animation.isPunching) {
       tempPunchX = myMeteors.meteors[tempIndex].x
@@ -306,17 +336,17 @@ playPause.addEventListener('click', () => {
   }
 })
 
-music.addEventListener('click', () => {
-  if (canPlayMusic) {
-    bgMusic.pause()
-    music.innerHTML = 'Music'
-    canPlayMusic = false
-  } else {
-    bgMusic.play()
-    music.innerHTML = 'Mute'
-    canPlayMusic = true
-  }
-})
+// music.addEventListener('click', () => {
+//   if (canPlayMusic) {
+//     bgMusic.pause()
+//     music.innerHTML = 'Music'
+//     canPlayMusic = false
+//   } else if (!canPlayMusic) {
+//     bgMusic.play()
+//     music.innerHTML = 'Mute'
+//     canPlayMusic = true
+//   }
+// })
 
 // event listeners
 window.addEventListener('click', e => {

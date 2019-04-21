@@ -26,17 +26,19 @@
 
   <section class="section section--game" id="play">
     <h2 class="section--game__title">One Tap Man</h2>
-
-    <div class="section--options">
-      <h3 class="section--options__header">Money</h3>
-      <p class="section--options__score" id="score">$<span id="rent-money">0</span></p>
-      <a class="btn btn--start" id="start" href="#play">Start</a>
-      <a class="btn btn--music" id="music" href="#play">Music</a>
-      <p class="options__label">Speed:</p>
-      <input class="options__slider" id="slider" type="range" min=10 max=100 value=10>
+    <div class="section--game__playarea">
+    <canvas id="canvas"></canvas>
+      <div class="section--options">
+        <a class="btn btn--start" id="start" href="#play">Start</a>
+        <input class="options__slider" id="slider" type="range" min=10 max=100 value=10>
+        <audio class="music-controls" id="music-controls" controls loop>
+          <source src="../audio/GenosTheme.mp3" type="audio/ogg">
+          <source src="../audio/GenosTheme.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
     </div>
 
-    <canvas id="canvas"></canvas>
     <script src="../public/index.js"></script>
   </section>
 

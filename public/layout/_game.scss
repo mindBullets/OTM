@@ -1,4 +1,9 @@
 .section--game {
     padding: 0;
     margin: 0;
+
+    &__playarea {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 }
