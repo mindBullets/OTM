@@ -199,7 +199,7 @@ class View {
     this.ctx.shadowOffsetX = 0
     this.ctx.shadowBlur = 8
     this.ctx.shadowColor = black
-    // this.ctx.fillText('$' + parseFloat(meteor.getValue()).toFixed(2), meteor.x, meteor.y + meteor.r + 30)
+    this.ctx.fillText('$' + parseFloat(meteor.getValue()).toFixed(2), meteor.x, meteor.y + meteor.r + 30)
   }
 
   drawAllMeteors (list) {
@@ -212,7 +212,6 @@ class View {
       this.ctx.shadowOffsetX = 0
       this.ctx.shadowBlur = 8
       this.ctx.shadowColor = black
-      this.ctx.fillText( `i = ${i}`, meteor.x, meteor.y + meteor.r + 30)
 
       /* let the meteor go completely off the screen. to give users a chance
       to click allow for some extra time to let the punch animation finish */
